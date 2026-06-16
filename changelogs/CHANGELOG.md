@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 
 
+## [0.1.0-alpha.3](https://github.com/FullStackWithLawrence/netflix-writers/compare/v0.1.0-alpha.2...v0.1.0-alpha.3) (2026-06-16)
+
+### Bug Fixes
+
+* add os-specific setup scripts ([8d39cb0](https://github.com/FullStackWithLawrence/netflix-writers/commit/8d39cb04c762e5f3c096e5ac7b8be2a9f1d4b603))
+
 ## [0.1.0-alpha.2](https://github.com/FullStackWithLawrence/netflix-writers/compare/v0.1.0-alpha.1...v0.1.0-alpha.2) (2026-06-16)
 
 ### Bug Fixes
