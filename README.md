@@ -35,21 +35,70 @@ Netflix AI Greenlight Challenge: Can Data Science Predict the Next Hit Drama?
    make run
    ```
 
-4. Other helpful commands:
+## Data Sources
 
-   ```console
-   source venv/bin/activate
-   which python3
-   which pip3
-   python --version # you should see Python 3.13.x
-   pip --version # you should see pip 25.3.x
-   ```
+### Netflix REST API
+
+Every Tuesday, Netflix publishes four [global Top 10 lists](https://www.kaggle.com/datasets/dhruvildave/netflix-top-10-tv-shows-and-films)
+for films and TV: Film (English), TV (English), Film (Non-English), and TV (Non-English).
+These lists rank titles based on weekly hours viewed: the total number of hours
+that members around the world watched each title from Monday to Sunday of the
+previous week.
+
+Each season of a series and each film is considered on their own, so you might
+see both Stranger Things seasons 2 and 3 in the Top 10. Because titles sometimes
+move in and out of the Top 10, there is also the total number of weeks that a
+season of a series or film has spent on the list.
+
+Netflix also publishes Top 10 lists for nearly 100 countries and territories
+(the same locations where there are Top 10 rows on Netflix). Country lists are
+also ranked based on hours viewed but don’t show country-level viewing directly.
+
+Finally, Netflix provides a list of the Top 10 most popular Netflix films and
+TV (branded Netflix in any country) in each of the four categories based on the
+hours that each title was viewed during its first 28 days.
+
+### IMDb Non-Commercial Datasets
+
+Subsets of [IMDb data](https://datasets.imdbws.com/title.basics.tsv.gz)
+are available for access to users for personal and
+non-commercial use. You can hold local copies of this data, and it is subject
+to our terms and conditions. Please refer to the Non-Commercial Licensing
+and copyright/license and verify compliance.
+
+### The Movie Database
+
+The [TMDB (The Movie Database)](https://www.kaggle.com/datasets/asaniczka/full-tmdb-tv-shows-dataset-2023-150k-shows)
+is a widely-used resource for movie and TV show
+data, providing valuable information such as ratings, plot summaries, and more.
+This dataset contains a collection of 150,000 tv shows from the TMDB database,
+collected and cleaned.
+
+### Polti's Thirty-Six Dramatic Situations
+
+The [Thirty-Six Dramatic Situations](https://en.wikipedia.org/wiki/The_Thirty-Six_Dramatic_Situations)
+is a descriptive list which was first
+proposed by Georges Polti in 1895 to categorize every dramatic situation that
+might occur in a story or performance.[1] Polti analyzed classical Greek texts,
+plus classical and contemporaneous French works. He also analyzed a handful of
+non-French authors. In his introduction, Polti claims to be continuing the work
+of Carlo Gozzi (1720–1806), who also identified 36 situations.
 
 ## Completely Remove This Project
 
 ```console
 make tear-down
 deactivate
+```
+
+## Helpful Commands
+
+```console
+source venv/bin/activate
+which python3
+which pip3
+python --version # you should see Python 3.13.x
+pip --version # you should see pip 25.3.x
 ```
 
 ## Support
