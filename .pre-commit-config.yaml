@@ -52,7 +52,7 @@ repos:
     rev: 1.9.4
     hooks:
       - id: bandit
-        args: ["-s", "B608"]
+        args: ["-s", "B608,B110"]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:

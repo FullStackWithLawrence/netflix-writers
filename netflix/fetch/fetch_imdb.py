@@ -20,7 +20,7 @@ from .lib import cleanup, fetch_url
 
 BASE_URL = "https://datasets.imdbws.com"
 IMDB_DIR = os.path.join(DB_DIR, "imdb")
-IMDB_TITLE_TYPES = ["movie", "tvSeries", "tvMiniSeries"]
+IMDB_TITLE_TYPES = ["movie", "tvSeries"]
 
 
 def export_titles(con: duckdb.DuckDBPyConnection) -> None:
@@ -77,7 +77,8 @@ def build_titles_table(con: duckdb.DuckDBPyConnection, filename: Path) -> None:
     con.execute(
         f"""
         CREATE OR REPLACE TABLE title_basics AS
-        SELECT  *
+        SELECT  *,
+                LOWER(REGEXP_REPLACE(primaryTitle, '[^a-z0-9 ]', '', 'g')) AS title_key
         FROM    read_csv_auto(?, delim='\t')
         WHERE   titleType IN ({title_types}) AND
                 isAdult = '0'
@@ -105,6 +106,7 @@ def build_ratings_table(con: duckdb.DuckDBPyConnection, filename: Path) -> None:
         SELECT  r.*
         FROM    read_csv_auto(?, delim='\t') AS r
                 SEMI JOIN title_basics USING (tconst)
+        WHERE r.numVotes >= 50
         """,
         [str(filename)],
     )

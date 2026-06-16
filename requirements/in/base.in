@@ -28,6 +28,8 @@ xgboost                # Extreme gradient boosting models
 lightgbm               # Fast gradient boosting framework
 catboost               # Gradient boosting with categorical support
 plotly                 # Interactive charts and dashboards
+rapidfuzz              #
+doublemetaphone        #
 
 # Data Acquisition & Management
 # -----------------------------------------------------------------------------
