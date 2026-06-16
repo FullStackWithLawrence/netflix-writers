@@ -3,6 +3,14 @@
 [![License: GNU AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)](https://www.python.org/)
 [![Pydantic](https://img.shields.io/badge/Pydantic-2.13-blue?logo=pydantic)](https://docs.pydantic.dev/)
+[![pandas](https://img.shields.io/badge/pandas-2.x-blue?logo=pandas)](https://pypi.org/project/pandas/)
+[![NumPy](https://img.shields.io/badge/NumPy-2.x-blue?logo=numpy)](https://pypi.org/project/numpy/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.x-blue)](https://pypi.org/project/matplotlib/)
+[![Seaborn](https://img.shields.io/badge/Seaborn-0.13-blue)](https://pypi.org/project/seaborn/)
+[![SciPy](https://img.shields.io/badge/SciPy-1.x-blue?logo=scipy)](https://pypi.org/project/scipy/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-blue?logo=scikitlearn)](https://pypi.org/project/scikit-learn/)
+[![SHAP](https://img.shields.io/badge/SHAP-0.49-blue)](https://pypi.org/project/shap/)
+[![RapidFuzz](https://img.shields.io/badge/RapidFuzz-3.x-blue)](https://pypi.org/project/rapidfuzz/)
 <br>
 [![hack.d Lawrence McDaniel](https://img.shields.io/badge/Author-Lawrence%20McDaniel-orange.svg)](https://lawrencemcdaniel.com)
 
