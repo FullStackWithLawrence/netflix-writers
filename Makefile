@@ -17,7 +17,8 @@ endif
 include .env
 
 
-.PHONY: all init activate build run tear-down help
+.PHONY: all init activate build run tear-down pre-commit-init pre-commit-run release analyze \
+		check-python python-init python-lint python-clean python-requirements python-fetch-data python-build-dataset help
 
 # Default target executed when no arguments are given to make.
 all: help
@@ -81,6 +82,12 @@ release:
 	@echo "Forcing a new semantic release on GitHub by creating an empty commit and pushing to the repository ..."
 	@echo "==============================================================================="
 	git commit -m "fix: force a new release" --allow-empty && git push
+
+analyze:
+	@echo "==============================================================================="
+	@echo "Generating code analysis report using cloc ..."
+	@echo "==============================================================================="
+	cloc . --exclude-ext=svg,zip --fullpath --not-match-d=smarter/smarter/static/assets/ --vcs=git
 
 # ---------------------------------------------------------
 # Python
@@ -170,6 +177,7 @@ help:
 	@echo 'pre-commit-init        - Install and configure pre-commit hooks'
 	@echo 'pre-commit-run         - Run pre-commit hooks on all files'
 	@echo 'release                - Force a new semantic release on GitHub by creating an empty commit and pushing to the repository'
+	@echo 'analyze                - Generate code analysis report using cloc'
 	@echo '<************************** Python **************************>'
 	@echo 'check-python           - Verify Python 3.13 is installed'
 	@echo 'python-init            - Create a Python virtual environment and install dependencies'
