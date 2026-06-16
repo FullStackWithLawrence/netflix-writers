@@ -9,12 +9,19 @@ environment variable or defaults to "situations.csv" in the current directory.
 """
 
 import csv
+import logging
 import os
 from pathlib import Path
 
 from .const import DB_DIR
 
 POLTI_DIR = os.path.join(DB_DIR, "polti")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
 
 def write_situations_csv(output_path: Path) -> None:
@@ -98,13 +105,13 @@ def write_situations_csv(output_path: Path) -> None:
         writer.writerow(["Number", "Situation", "Description"])
         writer.writerows(rows)
 
-    print(f"CSV written to: {output_path}")
+    logger.info("CSV written to: %s", output_path)
 
 
 def main():
     path = Path(os.path.join(POLTI_DIR, "situations.csv"))
     write_situations_csv(path)
-    print("-" * 40)
+    logger.info("-" * 40)
 
 
 if __name__ == "__main__":

@@ -1,14 +1,23 @@
 """Utility functions for downloading and managing files."""
 
 import json
+import logging
 from pathlib import Path
+from typing import Any, Optional
 
 import pandas as pd
 import requests
 from tqdm import tqdm
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
-def fetch_url(url: str, output_dir: str | Path, timeout: int = 60) -> Path | None:
+
+def fetch_url(url: str, output_dir: str | Path, timeout: int = 60) -> Optional[Path]:
     """
     Download a file and return its local path.
 
@@ -26,12 +35,12 @@ def fetch_url(url: str, output_dir: str | Path, timeout: int = 60) -> Path | Non
     filename = url.rsplit("/", maxsplit=1)[-1]
     output_path = output_dir / filename
     if output_path.exists():
-        print(f"File {output_path} already exists, skipping download.")
+        logger.info("File %s already exists, skipping download.", output_path)
         return output_path
 
     # Reuse an existing download.
     if output_path.exists():
-        print(f"File {output_path} already exists, skipping download.")
+        logger.info("File %s already exists, skipping download.", output_path)
         return output_path
 
     try:
@@ -53,7 +62,7 @@ def fetch_url(url: str, output_dir: str | Path, timeout: int = 60) -> Path | Non
                             pbar.update(len(chunk))
 
     except (requests.RequestException, OSError) as exc:
-        print(f"Failed to download {url}: {exc}")
+        logger.error("Failed to download %s: %s", url, exc)
 
         # Avoid leaving behind a partial download.
         output_path.unlink(missing_ok=True)
@@ -68,10 +77,10 @@ def cleanup(filename: Path) -> None:
     try:
         filename.unlink(missing_ok=True)
     except OSError as exc:
-        print(f"Failed to remove {filename}: {exc}")
+        logger.error("Failed to remove %s: %s", filename, exc)
 
 
-def safe_cast(x) -> list:
+def safe_cast(x: Any) -> list[Any]:
     """
     Always returns a list safely, even if input is:
 
@@ -96,8 +105,8 @@ def safe_cast(x) -> list:
         if pd.isna(x):
             return []
     # pylint: disable=broad-except
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.error("Failed to check NaN: %s", exc)
 
     if isinstance(x, str):
         try:
@@ -106,7 +115,8 @@ def safe_cast(x) -> list:
                 return [c.get("name") for c in parsed if isinstance(c, dict) and "name" in c]
             return []
         # pylint: disable=broad-except
-        except Exception:
+        except Exception as exc:
+            logger.error("Failed to parse JSON: %s", exc)
             return []
 
     return []

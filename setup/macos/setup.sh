@@ -6,7 +6,7 @@
 # setup.sh — macOS Environment Setup for netflix-writers Project
 #
 # This script verifies and installs required development tools for the netflix-writers project on macOS.
-# It checks for Xcode Command Line Tools, Homebrew, and Docker Desktop, and installs essential
+# It checks for Xcode Command Line Tools, and Homebrew and installs essential
 # packages and libraries via Homebrew.
 #
 # Usage:
@@ -17,9 +17,8 @@
 #   - Administrator privileges (for some installations and symlinks)
 #
 # Actions performed:
-#   - Verifies Xcode Command Line Tools, Homebrew, Docker Desktop
-#   - Ensures docker-compose symlink exists
-#   - Installs development dependencies (gcc, python, node, nvm, etc.)
+#   - Verifies Xcode Command Line Tools, Homebrew
+#   - Installs development dependencies (python, etc.)
 #
 # Exit codes:
 #   0 — Success
@@ -28,7 +27,13 @@
 ###############################################################################
 
 # open "macappstore://itunes.apple.com/app/id497799835"
-xcode-select --install
+echo "Xcode Command Line Tools:"
+if ! xcode-select -p &>/dev/null; then
+    echo "[INFO] Installing Xcode Command Line Tools..."
+    xcode-select --install
+    exit 1
+fi
+echo -e "\033[0;32m[OK]\033[0m Xcode Command Line Tools are installed."
 
 
 # Verify prerequisites: Xcode, Homebrew, Docker Desktop
@@ -53,31 +58,21 @@ else
 fi
 
 brew update
-brew upgrade
-brew install gcc python@3.13 node nvm
-brew install blis zlib zstd openblas libffi openssl libxml2 libxslt geos jq k9s
+brew install python@3.13
+brew install sqlite readline xz ca-certificates zlib zstd openblas libffi openssl@3 libxml2 libxslt geos jq
 
 echo ""
 echo "=============================================="
 echo " Installed Packages Summary"
 echo "=============================================="
 
-echo "Xcode Command Line Tools:"
-xcode-select -v
-
 echo "Homebrew:"
 brew --version | head -n 1
-
-echo "gcc:"
-gcc --version | head -n 1
 
 echo "python:"
 python3 --version
 
-echo "node:"
-node --version
-
 echo "Other Homebrew packages:"
-brew list --versions blis zlib zstd openblas libffi openssl libxml2 libxslt geos jq k9s
+brew list --versions sqlite readline xz ca-certificates zlib zstd openblas libffi openssl@3 libxml2 libxslt geos jq
 
 echo "=============================================="

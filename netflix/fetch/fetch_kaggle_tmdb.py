@@ -7,6 +7,7 @@ and exports the results to CSV files.
 https://www.kaggle.com/datasets/asaniczka/full-tmdb-tv-shows-dataset-2023-150k-shows
 """
 
+import logging
 import os
 
 from kaggle.api.kaggle_api_extended import KaggleApi  # type: ignore[import-untyped]
@@ -17,6 +18,12 @@ KAGGLE_DIR = os.path.join(DB_DIR, "kaggle", "tmdb-movie-metadata")
 DATASET = "asaniczka/full-tmdb-tv-shows-dataset-2023-150k-shows"
 
 api = KaggleApi()
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -31,8 +38,8 @@ def main():
     """
     api.authenticate()
     api.dataset_download_files(DATASET, path=KAGGLE_DIR, unzip=True)
-    print("Dataset downloaded successfully.")
-    print("-" * 40)
+    logger.info("Dataset downloaded successfully.")
+    logger.info("-" * 40)
 
 
 if __name__ == "__main__":

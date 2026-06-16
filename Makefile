@@ -52,7 +52,8 @@ run:
 	@echo "==============================================================================="
 	@echo "Running solution ..."
 	@echo "==============================================================================="
-	make docker-run
+	make python-fetch-data
+	make python-build-dataset
 
 # destroy all Docker build and local artifacts
 # takes around 1 minute to complete
@@ -61,7 +62,6 @@ tear-down:
 	@echo "Tearing down solution ..."
 	@echo "==============================================================================="
 	make python-clean
-	make docker-prune
 
 pre-commit-init:
 	@echo "==============================================================================="
@@ -140,7 +140,6 @@ python-requirements:
 	pip install pip==25.3 setuptools wheel pip-tools
 	pip-compile requirements/in/base.in -o requirements/base.txt
 	pip-compile requirements/in/local.in -o requirements/local.txt
-	pip-compile requirements/in/docker.in -o requirements/docker.txt
 
 python-fetch-data:
 	@echo "==============================================================================="
@@ -150,7 +149,7 @@ python-fetch-data:
 
 python-build-dataset:
 	@echo "==============================================================================="
-	@echo "Building dataset from fetched data ..."
+	@echo "Building enriched Netflix dataset from fetched data ..."
 	@echo "==============================================================================="
 	$(ACTIVATE_VENV) && python -m netflix.fetch.dataset
 
@@ -177,4 +176,6 @@ help:
 	@echo 'python-lint            - Run Python linting using pre-commit and pylint'
 	@echo 'python-clean           - Destroy the Python virtual environment and remove __pycache__ directories'
 	@echo 'python-requirements    - Compile and update Python dependency files'
+	@echo 'python-fetch-data      - Fetch data from external APIs and save to local files'
+	@echo 'python-build-dataset   - Build enriched Netflix dataset from fetched data'
 	@echo '===================================================================='

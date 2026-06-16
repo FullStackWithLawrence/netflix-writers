@@ -10,6 +10,7 @@ Outputs:
     - title.ratings.csv
 """
 
+import logging
 import os
 from pathlib import Path
 
@@ -21,6 +22,13 @@ from .lib import cleanup, fetch_url
 BASE_URL = "https://datasets.imdbws.com"
 IMDB_DIR = os.path.join(DB_DIR, "imdb")
 IMDB_TITLE_TYPES = ["movie", "tvSeries"]
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
 
 def export_titles(con: duckdb.DuckDBPyConnection) -> None:
@@ -39,7 +47,7 @@ def export_titles(con: duckdb.DuckDBPyConnection) -> None:
         TO '{output_path}'
         (FORMAT csv, HEADER true)
         """)
-    print(f"Exported title_basics to {output_path}.")
+    logger.info("Exported title_basics to %s.", output_path)
 
 
 def export_ratings(con: duckdb.DuckDBPyConnection) -> None:
@@ -58,7 +66,7 @@ def export_ratings(con: duckdb.DuckDBPyConnection) -> None:
         TO '{output_path}'
         (FORMAT csv, HEADER true)
         """)
-    print(f"Exported title_ratings to {output_path}.")
+    logger.info("Exported title_ratings to %s.", output_path)
 
 
 def build_titles_table(con: duckdb.DuckDBPyConnection, filename: Path) -> None:
@@ -72,7 +80,7 @@ def build_titles_table(con: duckdb.DuckDBPyConnection, filename: Path) -> None:
     .. returns:
         None
     """
-    print(f"Building title_basics table from {filename}...")
+    logger.info("Building title_basics table from %s...", filename)
     title_types = ", ".join(f"'{t}'" for t in IMDB_TITLE_TYPES)
     con.execute(
         f"""
@@ -85,7 +93,7 @@ def build_titles_table(con: duckdb.DuckDBPyConnection, filename: Path) -> None:
         """,
         [str(filename)],
     )
-    print("built title_basics table.")
+    logger.info("Built title_basics table.")
 
 
 def build_ratings_table(con: duckdb.DuckDBPyConnection, filename: Path) -> None:
@@ -99,7 +107,7 @@ def build_ratings_table(con: duckdb.DuckDBPyConnection, filename: Path) -> None:
     .. returns:
         None
     """
-    print(f"Building title_ratings table from {filename}...")
+    logger.info("Building title_ratings table from %s...", filename)
     con.execute(
         """
         CREATE OR REPLACE TABLE title_ratings AS
@@ -110,7 +118,7 @@ def build_ratings_table(con: duckdb.DuckDBPyConnection, filename: Path) -> None:
         """,
         [str(filename)],
     )
-    print("built title_ratings table.")
+    logger.info("Built title_ratings table.")
 
 
 def fetch_title_basics(with_cleanup: bool = False) -> None:
@@ -140,8 +148,8 @@ def fetch_title_basics(with_cleanup: bool = False) -> None:
         if with_cleanup:
             cleanup(titles_file)
 
-    print("Generated titles.basics.csv")
-    print("-" * 40)
+    logger.info("Generated titles.basics.csv")
+    logger.info("-" * 40)
 
 
 def fetch_title_ratings(with_cleanup: bool = False) -> None:
@@ -171,8 +179,8 @@ def fetch_title_ratings(with_cleanup: bool = False) -> None:
         if with_cleanup:
             cleanup(ratings_file)
 
-    print("Generated title.ratings.csv")
-    print("-" * 40)
+    logger.info("Generated title.ratings.csv")
+    logger.info("-" * 40)
 
 
 def main() -> None:
