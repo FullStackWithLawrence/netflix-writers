@@ -20,10 +20,11 @@ Netflix AI Greenlight Challenge: Can Data Science Predict the Next Hit Drama?
 ## Quickstart
 
 1. Register for Kaggle and get a [Kaggle API Key](./docs/KAGGLE.md)
-2. Install required system packages for your operating system: [Windows](./setup/windows/setup.ps1),
+2. Install [Anaconda](https://www.anaconda.com/download)
+3. Install required system packages for your operating system: [Windows](./setup/windows/setup.ps1),
    [macOS](./setup/macos/setup.sh), [Linux](./setup/linux/setup.sh)
 
-3. Initialize your environment by running the make commands below.
+4. Initialize your environment by running the make commands below.
    These will create and activate a Python virtual
    environment, and then download data files for Netflix, IMDb and The Movie
    Database (TMDB).

@@ -36,6 +36,7 @@ init:
 	@echo "==============================================================================="
 	@echo "Initialization complete!"
 	@echo "==============================================================================="
+	make python-init
 
 activate:
 	./scripts/activate.sh
@@ -111,6 +112,7 @@ python-init:
 	$(ACTIVATE_VENV) && \
 	$(PIP) install pip==25.3 setuptools wheel pip-tools && \
 	PIP_CACHE_DIR=.pypi_cache $(PIP) install -r requirements/local.txt
+	$(ACTIVATE_VENV) && $(PYTHON) -m ipykernel install --user --name py311 --display-name "Python 3.13"
 
 python-lint:
 	@echo ""
